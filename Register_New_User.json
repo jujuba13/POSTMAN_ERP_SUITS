@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "596ce07d-6a66-42ba-a925-9267489e89f0",
+		"name": "Register_New_User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30631997"
+	},
+	"item": [
+		{
+			"name": "Log Into User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Check is token exist', function(){\r",
+							"\r",
+							"pm.expect(JSON.parse(responseBody).token).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"token\", JSON.parse(responseBody).token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mail\": \"{{email_login}}\",\r\n  \"password\": \"{{Pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function first_Name() {\r",
+							"\r",
+							"    let first_Name = [\"Juliana\", \"Rodrigo\", \"Rosa\", \"Mario\", \"Luna\", \"Ayla\", \"Zara\", \"Mavie\", \"Arlon\", \"Zayan\", \"Zyan\", \"Lizye\", \"Aurora\", \"Alessa\", \"Dante\", \"Luigi\", \"Aaron\", \"Kayron\", \"Yan\", \"Ava\", \"Olivia\"];\r",
+							"    let randomItem = first_Name[Math.floor(Math.random() * first_Name.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"pm.environment.set(\"FirstName\", first_Name());\r",
+							"\r",
+							"function last_Name() {\r",
+							"\r",
+							"    let last_Name = [\"Souza de França\", \"Venceslau de França\", \"Soares\", \"Francisco de França\", \"França\", \"Souza\", \"Venceslau\", \"Santos\", \"Ferreira\", \"Silveira\", \"Oliveira\", \"Moreto\", \"Hamadé\", \"Maressa\", \"Nunes\", \"Menezes\", \"Mendes\", \"Vieira\", \"Pandovan\", \"Lopez\"];\r",
+							"    let randomItem = last_Name[Math.floor(Math.random() * last_Name.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"LastName\", last_Name()),\r",
+							"\r",
+							"    pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+							"\r",
+							"/*function accessProfile() {\r",
+							"    let accessProfile = [\"ADMIN\", \"FINANCEIRO\", \"TI\", \"PRODUTOS\", \"RECURSOS HUMANOS\", \"AUDITORIA\", \"ATENDIMENTO\", \"OUVIDORIA\", \"CONTROLADORIA\"];\r",
+							"    let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"pm.environment.set(\"AccessProfile\", accessProfile())*/\r",
+							"\r",
+							"\r",
+							"function email_provider() {\r",
+							"\r",
+							"    let email_provider = [\"@hotmail.com\", \"@outlook.com\", \"@gmail.com\", \"@yahoo.com\"];\r",
+							"    let randomItem = email_provider[Math.floor(Math.random() * email_provider.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"pm.environment.set(\"Email_Provider\", email_provider())\r",
+							"\r",
+							"// Gera um número aleatório de onze dígitos\r",
+							"function cpf() {\r",
+							"    let randomNumber = Math.floor(Math.random() * 90000000000) + 10000000000;\r",
+							"    return randomNumber\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"CPF\", cpf());\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"Email_Provider\"))\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"\tpm.response.to.have.status(201);\r",
+							"\t})\r",
+							"\t\t\t\t\t\t\t\t\t                                  \r",
+							" pm.test('Check is fullName true', function(){\r",
+							" pm.expect(pm.environment.get(\"FullName\")).to.eq(JSON.parse(responseBody).user.fullName);\r",
+							"\t }),\r",
+							"\t\t\t\t\t\t\t\t\t\r",
+							"pm.test('Check is mail true', function(){\r",
+							"pm.expect(pm.environment.get(\"Mail\")).to.eq(JSON.parse(responseBody).user.mail);\r",
+							"\t })\r",
+							"\t\t\t\r",
+							"\t\t\t\t\t\t\t\t\t\r",
+							" pm.test('Check is status true', function(){\r",
+							"\r",
+							"pm.expect(true).to.eq(JSON.parse(responseBody).user.status);\r",
+							"\t})\r",
+							"\r",
+							"pm.environment.set(\"Register_ID_User\", JSON.parse(responseBody).user._id);\r",
+							"\r",
+							"pm.environment.set(\"Email_User\", JSON.parse(responseBody).user.mail);\r",
+							"\t\t\t\t\t\t\t\t\t"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Mail}}\",\r\n  \"password\": \"{{Pass}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{CPF}}\",\r\n  \"confirmPassword\": \"{{Pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,147 @@
+{
+	"id": "0a1ed895-907c-4e59-9d81-2029f1e7bd7f",
+	"name": "Comunity",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://suits.qacoders-academy.com.br/api",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "FirstName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LastName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "AccessProfile",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email_Provider",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Mail",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CPF",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Register_ID",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Pass",
+			"value": "1234@Test",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "email_login",
+			"value": "sysadmin@qacoders.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Token_User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Register_ID_User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Email_User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "FullName_User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Mail_User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "CPF_User",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Count_Number_1",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Count_Number_2",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "UsuariosCadastrados",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Cost_Center",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Board_Name",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-04-19T23:31:33.370Z",
+	"_postman_exported_using": "Postman/10.24.19-240415-1902"
+}

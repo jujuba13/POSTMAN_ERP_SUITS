@@ -1,0 +1,470 @@
+{
+	"info": {
+		"_postman_id": "f1b5c4b0-1a58-4d78-8119-34f5f7b0369e",
+		"name": "consult_list_count_the_user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30631997"
+	},
+	"item": [
+		{
+			"name": "Log Into User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Check is token exist', function(){\r",
+							"\r",
+							"pm.expect(JSON.parse(responseBody).token).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"token\", JSON.parse(responseBody).token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mail\": \"{{email_login}}\",\r\n  \"password\": \"{{Pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function first_Name() {\r",
+							"\r",
+							"    let first_Name = [\"Juliana\", \"Rodrigo\", \"Rosa\", \"Mario\", \"Luna\", \"Ayla\", \"Zara\", \"Mavie\", \"Arlon\", \"Zayan\", \"Zyan\", \"Lizye\", \"Aurora\", \"Alessa\", \"Dante\", \"Luigi\", \"Aaron\", \"Kayron\", \"Yan\", \"Ava\", \"Olivia\"];\r",
+							"    let randomItem = first_Name[Math.floor(Math.random() * first_Name.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"pm.environment.set(\"FirstName\", first_Name());\r",
+							"\r",
+							"function last_Name() {\r",
+							"\r",
+							"    let last_Name = [\"Souza de França\", \"Venceslau de França\", \"Soares\", \"Francisco de França\", \"França\", \"Souza\", \"Venceslau\", \"Santos\", \"Ferreira\", \"Silveira\", \"Oliveira\", \"Moreto\", \"Hamadé\", \"Maressa\", \"Nunes\", \"Menezes\", \"Mendes\", \"Vieira\", \"Pandovan\", \"Lopez\"];\r",
+							"    let randomItem = last_Name[Math.floor(Math.random() * last_Name.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"LastName\", last_Name()),\r",
+							"\r",
+							"    pm.environment.set(\"FullName\", pm.environment.get(\"FirstName\") + \" \" + pm.environment.get(\"LastName\"));\r",
+							"\r",
+							"/*function accessProfile() {\r",
+							"    let accessProfile = [\"ADMIN\", \"FINANCEIRO\", \"TI\", \"PRODUTOS\", \"RECURSOS HUMANOS\", \"AUDITORIA\", \"ATENDIMENTO\", \"OUVIDORIA\", \"CONTROLADORIA\"];\r",
+							"    let randomItem = accessProfile[Math.floor(Math.random() * accessProfile.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"pm.environment.set(\"AccessProfile\", accessProfile())*/\r",
+							"\r",
+							"\r",
+							"function email_provider() {\r",
+							"\r",
+							"    let email_provider = [\"@hotmail.com\", \"@outlook.com\", \"@gmail.com\", \"@yahoo.com\"];\r",
+							"    let randomItem = email_provider[Math.floor(Math.random() * email_provider.length)];\r",
+							"\r",
+							"    return randomItem\r",
+							"}\r",
+							"pm.environment.set(\"Email_Provider\", email_provider())\r",
+							"\r",
+							"// Gera um número aleatório de onze dígitos\r",
+							"function cpf() {\r",
+							"    let randomNumber = Math.floor(Math.random() * 90000000000) + 10000000000;\r",
+							"    return randomNumber\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"CPF\", cpf());\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.environment.set(\"Mail\", pm.environment.get(\"FirstName\") + \"_\" + pm.variables.replaceIn('{{$guid}}') + pm.environment.get(\"Email_Provider\"))\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"\tpm.response.to.have.status(201);\r",
+							"\t})\r",
+							"\t\t\t\t\t\t\t\t\t                                  \r",
+							" pm.test('Check is fullName true', function(){\r",
+							" pm.expect(pm.environment.get(\"FullName\")).to.eq(JSON.parse(responseBody).user.fullName);\r",
+							"\t }),\r",
+							"\t\t\t\t\t\t\t\t\t\r",
+							"pm.test('Check is mail true', function(){\r",
+							"pm.expect(pm.environment.get(\"Mail\")).to.eq(JSON.parse(responseBody).user.mail);\r",
+							"\t })\r",
+							"\t\t\t\r",
+							"\t\t\t\t\t\t\t\t\t\r",
+							" pm.test('Check is status true', function(){\r",
+							"\r",
+							"pm.expect(true).to.eq(JSON.parse(responseBody).user.status);\r",
+							"\t})\r",
+							"\r",
+							"pm.environment.set(\"Register_ID_User\", JSON.parse(responseBody).user._id);\r",
+							"\r",
+							"pm.environment.set(\"Email_User\", JSON.parse(responseBody).user.mail);\r",
+							"\t\t\t\t\t\t\t\t\t"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fullName\": \"{{FullName}}\",\r\n  \"mail\": \"{{Mail}}\",\r\n  \"password\": \"{{Pass}}\",\r\n  \"accessProfile\": \"ADMIN\",\r\n  \"cpf\": \"{{CPF}}\",\r\n  \"confirmPassword\": \"{{Pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Check is token exist', function(){\r",
+							"\r",
+							"pm.expect(JSON.parse(responseBody).token).to.exist;\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"Token_User\", JSON.parse(responseBody).token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{Token_User}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mail\": \"{{Email_User}}\",\r\n  \"password\": \"{{Pass}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consult all Registration_User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Extrair e definir os usuários cadastrados\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"UsuariosCadastrados\", jsonData.users);\r",
+							"\r",
+							"});\r",
+							"// Defina os usuários esperados (exemplo)\r",
+							"var usuariosEsperados = [\"Ayla Venceslau de França\", \"Lizye Menezes\", \"Ava Souza de França\", \"Zayan Maressa\", \"Aurora Silveira\", \"Kayron Venceslau\", \"Rodrigo Lopez\", \"Mavie Silveira\", \"Luna Moreto\", \"Aurora Mendes\", \"Dante Ferreira\", \"Dante Menezes\", \"Aurora Moreto\", \"Aurora Hamadé\", \"Aaron Soares\", \"Ava Pandovan\", \"Juliana Vieira\", \"Aaron Lopez\", \"Alessa Souza\", \"Arlon França\", \"Zara França\", \"Alessa Soares\", \"Zyan Vieira\", \"Luigi Ferreira\", \"Zyan Santos\", \"Arlon Maressa\", \"Aaron Santos\", \"Ayla Vieira\", \"Ava Francisco de França\", \"Arlon Santos\", \"Mavie Maressa\", \"Mario Souza de França\", \"Mavie Santos\", \"Luigi Silveira\", \"Mario Ferreira\", \"Aurora Venceslau\", \"Juliana Souza\", \r",
+							"\"Alessa Oliveira\", \"Arlon Souza de França\", \"Mario Nunes\", \"Zayan Souza de França\", \"Mario Maressa\", \"Zara Francisco de França\", \"Luigi Venceslau\", \"Aaron Maressa\", \"Dante Maressa\", \"Juliana Venceslau de França\", \"Zyan Venceslau de França\", \"Dante Menezes\", \"Aurora Vieira\"];\r",
+							"\r",
+							"pm.test(\"Verificar se todos os usuários estão cadastrados\", function () {\r",
+							"    var usuariosCadastrados = pm.environment.get(\"UsuariosCadastrados\");\r",
+							"    // Verificar se todos os usuários esperados estão presentes nos usuários cadastrados\r",
+							"   pm.test( \"usuariosEsperados\", function(usuario) {\r",
+							"        pm.expect(usuariosCadastrados).to.include(usuario);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{Token_User}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_User}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/user",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consult Registration ID User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Check is fullName true', function(){\r",
+							" pm.expect(pm.environment.get(\"FullName\")).to.eq(JSON.parse(responseBody).fullName);\r",
+							"\t })\r",
+							"\r",
+							"pm.test('Check is mail true', function(){\r",
+							"pm.expect(pm.environment.get(\"Mail\")).to.eq(JSON.parse(responseBody).mail);\r",
+							"\t })\r",
+							"\r",
+							"pm.environment.set(\"CPF_User\", JSON.parse(responseBody).cpf);\r",
+							"\t\t"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{Token_User}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "query",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_User}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/user/{{Register_ID_User}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"{{Register_ID_User}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registration record count User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Extrair e definir as variáveis de contagem\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"Count_Number_1\", jsonData.count);\r",
+							"    pm.environment.set(\"Count_Number_2\", jsonData.count + 1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verificar se Count_Number_2 é um a mais do que Count_Number_1\", function () {\r",
+							"    var countNumber1 = pm.environment.get(\"Count_Number_1\");\r",
+							"    var countNumber2 = pm.environment.get(\"Count_Number_2\");\r",
+							"\r",
+							"    pm.expect(countNumber2).to.equal(Number(countNumber1) + 1);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token_User}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/user/count",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"count"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
