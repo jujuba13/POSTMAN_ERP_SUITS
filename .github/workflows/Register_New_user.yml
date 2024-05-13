@@ -34,7 +34,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Step 3 Execute collection
-        run:  newman run Register_New_user.json -e Comunity_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report Test Signup - ERP" --reporter-htmlextra-title "Report Test Signup - ERP" --reporter-htmlextra-export ./docs/index.html
+        run:  newman run Register_New_User.json -e Comunity_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report Test Signup - ERP" --reporter-htmlextra-title "Report Test Signup - ERP" --reporter-htmlextra-export ./docs/index.html
 
 
       # Runs a set of commands using the runners shell
