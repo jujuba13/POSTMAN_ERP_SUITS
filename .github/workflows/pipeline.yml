@@ -1,4 +1,4 @@
-name: ERP Suits Postman Automation API Test 
+name: Resgistro login API 
 
 # Controls when the workflow will run
 on:
@@ -35,7 +35,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Step 3 Execute collection
-        run:  newman run Registration_Login_Sucess.json -e Comunity_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report Test Signup - ERP" --reporter-htmlextra-title "Report Test Signup - ERP" --reporter-htmlextra-export ./docs/index.html
+        run:  newman run Registration_Login_Sucess.json -e Comunity_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-export ./result/Report.html
 
 
       # Runs a set of commands using the runners shell
@@ -44,36 +44,35 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: ./docs/index.html
+          path: ./result/
 
-  Test-2:
-  name: login do usuário
-    # The type of runner that the job will run on
+    deploy:
+    name: Deploy GitHub Pages 🌐
     runs-on: ubuntu-latest
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    if: always()
+    needs: 
+      - test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://jujuba13.github.io/suits-academy-api-postman/Report.html
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Step 1 Check version Newman and Node
-        run: |
-          newman --version
-          node --version
-      # Runs a single command using the runners shell
-      - name: Step 2 Install Newman-Reporter-HtmlExtra
-        run: sudo npm install -g newman-reporter-htmlextra
-
-      # Runs a single command using the runners shell
-      - name: Step 3 Execute collection
-        run:  newman run Login_user.json -e Comunity_environment.json --reporters cli, -r htmlextra --reporter-htmlextra-browserTitle "Report Test Signup - ERP" --reporter-htmlextra-title "Report Test Signup - ERP" --reporter-htmlextra-export ./docs/index.html
-
-
-      # Runs a set of commands using the runners shell
-      - name: Step 4 Archive Production artifacts
-        if: ${{ always() }} # This ensures the step runs even if the previous steps fail
-        uses: actions/upload-artifact@v3
-        with:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+ 
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with: 
           name: report
-          path: ./docs/index.html
+ 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+ 
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
