@@ -62,7 +62,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: https://Norisvaljunior.github.io/Blacklist-academy-api-postman/Report.html
+      url: https://jujuba13.github.io/suits-academy-api-postman/Report.html
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v5
