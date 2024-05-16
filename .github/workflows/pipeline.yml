@@ -41,7 +41,7 @@ jobs:
       # Runs a set of command using the runners shell
       - name: Etapa 03 - Rodando as Collections de Testes
         run: |
-          newman run Registration_Login_Sucess.json -e Comunity_environment.json  --delay-request 1 --reporters cli , -r htmlextra --reporter-htmlextra-export ./result/Report.html
+          newman run Registration_Login_Sucess.json  -e Comunity_environment.json  --delay-request 1 --reporters cli , -r htmlextra --reporter-htmlextra-export ./result/Report.html
  
       - name: Etapa 04 - Salvando o Resultado dos Testes
         uses: actions/upload-artifact@v4
